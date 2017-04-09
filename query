@@ -1,0 +1,71 @@
+﻿CREATE sequence seq_users;
+CREATE sequence seq_roles;
+CREATE sequence seq_comments;
+CREATE sequence seq_projects;
+CREATE sequence seq_tasks;
+CREATE sequence seq_task_status;
+
+
+CREATE table roles (
+	id integer primary key default nextval('seq_roles'), 
+	name character varying(50)
+);
+CREATE table users (
+	id integer primary key default nextval('seq_users'), 
+	first_name character varying(30),
+	last_name character varying(30),
+	email character varying(50),
+	password character varying(32),
+	role_id integer references roles(id)
+);
+
+
+CREATE table task_status (
+	id integer primary key default nextval('seq_task_status'), 
+	name character varying(50)
+);
+
+
+
+CREATE table projects(
+	id integer primary key default nextval('seq_projects'), 
+	name character varying(50),
+	description character varying(512),
+	user_id  integer references users(id)
+);
+
+CREATE table tasks (
+	id integer primary key default nextval('seq_tasks'), 
+	name character varying(50),
+	description character varying(512),
+	project_id integer references projects(id),
+	task_status_id integer references task_status(id)
+);
+
+CREATE table comments (
+	id integer primary key default nextval('seq_comments'), 
+	text character varying(50),
+	user_id integer references users(id) not null,
+	tasks_id integer references tasks(id) not null
+);
+
+
+CREATE sequence seq_user_task;
+CREATE sequence seq_user_project;
+
+CREATE table user_task (
+	id integer primary key default nextval('seq_user_task'), 
+	user_id integer references users(id) not null,
+	task_id integer references tasks(id) not null
+);
+
+CREATE table user_project (
+	id integer primary key default nextval('seq_user_project'), 
+	user_id integer references users(id) not null,
+	project_id integer references projects(id) not null
+);
+
+INSERT INTO roles (id, name) VALUES (1, 'Manager');
+INSERT INTO roles (id, name) VALUES (2, 'Developer');
+
+INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (1, 'Alex', 'Shal', 'alex@mail.ru', '7612635', 1);

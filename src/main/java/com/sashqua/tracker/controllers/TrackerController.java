@@ -1,34 +1,24 @@
 package com.sashqua.tracker.controllers;
 
-import com.sashqua.tracker.security.SecurityUtils;
+import com.sashqua.tracker.entitys.Project;
+import com.sashqua.tracker.entitys.Task;
+import com.sashqua.tracker.service.ProjectService;
+import com.sashqua.tracker.service.TaskService;
 import com.sashqua.tracker.service.UserService;
-import org.springframework.data.repository.query.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class TrackerController {
 
@@ -36,27 +26,52 @@ public class TrackerController {
     UserDetailsService userDetailsService;
     @Autowired
     UserService userService;
-
-    @RequestMapping("/resource")
-    public Map<String,Object> home() {
-        Map<String,Object> model = new HashMap<String,Object>();
-        model.put("id", UUID.randomUUID().toString());
-        model.put("content", "Hello World");
-        return model;
-    }
+    @Autowired
+    ProjectService projectService;
+    @Autowired
+    TaskService taskService;
 
     @RequestMapping("/api/user/info")
-    public User user(User user) {
-//        User userr = new User();
-//        userr.setId(1);
-//        userr.setFirstName("admin");
-//        userr.setEmail("admin");
-//        userr.setPassword("admin");
-//        if (user.getEmail().equals(userr.getEmail()) && user.getPassword().equals(userr.getPassword())) return userr;
-        return null;
+    public com.sashqua.tracker.entitys.User user() {
+        com.sashqua.tracker.entitys.User user = userService.getUser(1);
+        return user;
     }
 
-//
+    @RequestMapping(value = "/api/projects", method = RequestMethod.POST)
+    public Project createProject (@RequestBody @Valid final Project project) {
+        project.setTaskList(new ArrayList<>());
+        return projectService.save(project);
+    }
+
+    @RequestMapping(value = "/api/projects", method = RequestMethod.GET)
+    public List<Project> getUserProjects() {
+        return projectService.getUserProjects(1);
+    }
+
+    @RequestMapping(value = "/api/project/{id}", method = {RequestMethod.GET})
+    public Project getProject(@PathVariable("id") Integer id) {
+        return projectService.getProject(id);
+    }
+
+    @RequestMapping(value = "/api/project/{id}/tasks", method = {RequestMethod.POST})
+    public Task createTask(@PathVariable("id") Integer id, @RequestBody @Valid final Task task) {
+        Project project = new Project();
+        project = projectService.getProject(id);
+        task.setProject(project);
+        return taskService.save(task);
+    }
+
+    @RequestMapping(value = "/api/task/{id}", method = {RequestMethod.GET})
+    public Task getTask(@PathVariable("id") Integer id) {
+        return taskService.getTask(id);
+    }
+
+
+//    @RequestMapping(value = "/api/project/{id}/task/{id}", method = {RequestMethod.GET})
+//    public Project getVoter(@PathVariable("id") Integer id) {
+//        return projectService.getProject(id);
+//    }
+
 
     @RequestMapping(value = "/auth/login", method = RequestMethod.GET, produces = "application/json")
     public User getUser(Principal principial) {
@@ -68,21 +83,9 @@ public class TrackerController {
         return null;
     }
 
-//    @RequestMapping(value = "/auth/login", method = RequestMethod.GET, produces = "application/json")
-//    public @ResponseBody
-//    User getUser() {
-//        User user = userService.findByLogin(SecurityUtils.getCurrentLogin());
-//        user.setPassword(null);
-//        return user;
-//    }
-
-
     @RequestMapping(value = "/auth/logout", method = RequestMethod.POST)
     public void logout(HttpServletRequest rq, HttpServletResponse rs) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(rq, rs, null);
     }
-
-
-
 }

@@ -12,6 +12,23 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'login.html',
                 controller: 'LoginController'
             })
+            .when('/developer/projects', {
+                templateUrl: 'developer/projects.html',
+                controller: 'ProjectsController'
+            })
+            .when('/developer/project-create', {
+                templateUrl: 'developer/project-create.html',
+                controller: 'ProjectCreateController'
+            })
+            .when('/developer/project/:id', {
+                templateUrl: 'developer/project-info.html',
+                controller: 'ProjectInfoController'
+            })
+            .when('/developer/project/:id/task-create', {
+                templateUrl: 'developer/task-create.html',
+                controller: 'TaskCreateController'
+            })
+
             // .when('/voter/:id', {templateUrl: 'voter.html', controller: 'VoterDetailCtrl'})
             // .when('/create-vote', {templateUrl: 'create-vote.html', controller: 'VoterCreationCtrl'})
             .otherwise({

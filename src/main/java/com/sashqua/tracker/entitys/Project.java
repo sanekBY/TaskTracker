@@ -1,19 +1,22 @@
 package com.sashqua.tracker.entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 @Entity
-@Table(name = "comments")
+@Table(name = "projects")
 public class Project {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_projects")
-    @SequenceGenerator(name="seq_projects", sequenceName="seq_projects", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seqProjects")
+    @SequenceGenerator(name="seqProjects", sequenceName="seq_projects", allocationSize=1)
     @Column(name = "id", nullable = false, updatable = false)
     private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;

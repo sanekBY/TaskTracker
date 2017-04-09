@@ -1,0 +1,17 @@
+<div class="panel panel-default" xmlns:h="http://www.w3.org/1999/html">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="item in projects" >
+                <td class="col-sm-3" ><a href="developer/project/{{item.id}}">{{item.name}}</a></td>
+                <td class="col-sm-8">{{item.description}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-small btn-success" href="developer/project-create">Create new project</a>
+</div>

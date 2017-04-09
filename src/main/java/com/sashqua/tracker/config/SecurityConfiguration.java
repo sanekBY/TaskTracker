@@ -7,28 +7,26 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .httpBasic().and()
                 .authorizeRequests()
                 .antMatchers("/index.html","/login.html", "/**", "/main.html", "/auth/**").permitAll()
+//                .antMatchers("/**").access("hasRole('Manager')")
+//                .antMatchers("/developer/**").access("hasRole('Developer')")
                 .anyRequest().authenticated()
                 .and()
+//                .formLogin().loginPage("/login.html")
+//                .and()
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }
-
-
 
     /**
      * @return the userDetailsService

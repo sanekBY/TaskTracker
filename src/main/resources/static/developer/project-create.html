@@ -1,0 +1,23 @@
+<div class="panel panel-default" xmlns:h="http://www.w3.org/1999/html">
+    <h1>Create project</h1>
+
+    <form class="form-horizontal">
+        <div class=control-group"">
+            <label class="control-label" for="name">Name:</label>
+            <div class="input-lg" >
+                <input id="name" type="text" data-ng-model="name"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="description">Description:</label>
+            <div class="text-area">
+                <textarea id="description" data-ng-model="description" > </textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="form-select-button">
+                <a data-ng-click="createNewProject()" class="btn btn-success">Create</a>
+            </div>
+        </div>
+    </form>
+</div>

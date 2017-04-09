@@ -4,34 +4,7 @@
 
 'use strict';
 
-var service = angular.module('myservices', ['ngRoute', 'ngCookies']);
-
-service.service('Session',['$http', function () {
-            this.create = function (data) {
-                this.id = data.id;
-                this.login = data.login;
-                this.firstName = data.firstName;
-                this.lastName = data.familyName;
-                this.email = data.email;
-                this.userRoles = [];
-                angular.forEach(data.authorities, function (value, key) {
-                    this.push(value.name);
-                }, this.userRoles);
-            };
-            this.invalidate = function () {
-                this.id = null;
-                this.login = null;
-                this.firstName = null;
-                this.lastName = null;
-                this.email = null;
-                this.userRoles = null;
-            };
-            return this;
-}]);
-
-
-
-
+var service = angular.module('myservices', ['ngRoute', 'ngCookies', 'ngResource']);
 
 service.service(
     'UserService',['$http','$cookies', function($http, $cookies) {
@@ -135,3 +108,25 @@ service.service(
 
         } ]);
 
+
+service.factory('ProjectsFactory', function ($resource) {
+    return $resource('/api/projects', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+});
+
+
+service.factory('ProjectFactory', function ($resource) {
+    return $resource('/api/project/:id', {}, {
+        show: { method: 'GET'},
+        create: { method: 'POST' }
+    })
+});
+
+service.factory('TasksFactory', function ($resource) {
+    return $resource('/api/project/:id/tasks', {}, {
+        show: { method: 'GET'},
+        create: { method: 'POST', params: {id:'@id'} }
+    })
+});

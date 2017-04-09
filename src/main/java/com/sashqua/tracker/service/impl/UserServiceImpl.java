@@ -9,12 +9,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
 
-/**
- * CinemaHouse project
- *
- * @Version 1.0
- * Created by Alexandr Shalukho.
- */
 @Service("userService")
 @Validated
 public class UserServiceImpl implements UserService {
@@ -34,16 +28,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Integer id) {
-        return userRepository.getOne(id);
+        return userRepository.findOne(id);
     }
 
     @Override
     public User findByLogin(String login) {
-        User userr = new User();
-        userr.setId(1);
-        userr.setFirstName("admin");
-        userr.setEmail("admin");
-        userr.setPassword("admin");
-        return userr;
+        User user = new User();
+        user = userRepository.findByEmail(login);
+        return user;
     }
 }

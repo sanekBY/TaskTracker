@@ -56,3 +56,32 @@ app.controller('MainController', ['$rootScope', '$scope',  '$route', 'UserServic
        });
     };
 }]);
+
+app.controller('ProjectCreateController', ['$rootScope', '$scope',  '$location', 'ProjectFactory',
+    function ( $rootScope, $scope, $location, ProjectFactory ) {
+
+    $scope.createNewProject = function () {
+        var project = {"id": 1, "name" : $scope.name, "description" : $scope.description, "user_id" : null};
+        ProjectFactory.create(project);
+        $location.path('/developer/projects');
+    }
+}]);
+
+app.controller('ProjectsController', ['$scope',  '$route', 'ProjectsFactory',
+    function ( $scope, $route, ProjectsFactory ) {
+        $scope.projects = ProjectsFactory.query();
+}]);
+
+app.controller('ProjectInfoController', ['$scope',  '$routeParams', 'ProjectFactory',
+    function ( $scope, $routeParams, ProjectFactory ) {
+        $scope.project = ProjectFactory.show({id: $routeParams.id});
+}]);
+
+app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', 'TasksFactory',
+    function ($scope, $routeParams, $location, TasksFactory) {
+        $scope.createNewTask = function () {
+            var task = {"id": 1, "name" : $scope.name, "description" : $scope.description, "user_id" : null, "project_id" : null, "task_status_id" : 1};
+            TasksFactory.create({id: $routeParams.id}, task);
+            $location.path('/developer/project/' +  $routeParams.id);
+        }
+}]);

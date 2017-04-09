@@ -1,9 +1,13 @@
 package com.sashqua.tracker.entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.annotation.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,6 +28,8 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
+
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
@@ -31,6 +37,7 @@ public class User implements UserDetails {
 //    private List<Task> taskList;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Project> projectList;
+    @Transient
     private String username;
 
     public User() {

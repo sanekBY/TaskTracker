@@ -1,5 +1,7 @@
 package com.sashqua.tracker.entitys;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,16 +9,17 @@ import java.util.List;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_tasks")
-    @SequenceGenerator(name="seq_tasks", sequenceName="seq_tasks", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="TaskSeq")
+    @SequenceGenerator(name="TaskSeq", sequenceName="seq_tasks", allocationSize=1)
     @Column(name = "id", nullable = false, updatable = false)
     private Integer id;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id")
+    @JoinColumn(name = "project_id")
     private Project project;
     @JoinTable(name = "user_task", joinColumns = {
             @JoinColumn(name = "task_id", referencedColumnName = "id")}, inverseJoinColumns = {

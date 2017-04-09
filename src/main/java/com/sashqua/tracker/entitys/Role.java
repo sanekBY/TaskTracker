@@ -1,6 +1,8 @@
 package com.sashqua.tracker.entitys;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 

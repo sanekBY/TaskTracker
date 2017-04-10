@@ -28,6 +28,10 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'developer/task-create.html',
                 controller: 'TaskCreateController'
             })
+            .when('/developer/project/:pid/task/:id', {
+                templateUrl: 'developer/task-info.html',
+                controller: 'TaskInfoController'
+            })
 
             // .when('/voter/:id', {templateUrl: 'voter.html', controller: 'VoterDetailCtrl'})
             // .when('/create-vote', {templateUrl: 'create-vote.html', controller: 'VoterCreationCtrl'})

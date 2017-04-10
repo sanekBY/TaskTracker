@@ -10,6 +10,10 @@ import java.util.List;
 @Table(name = "roles")
 public class Role {
 
+    public static final int DEVELOPER = 2;
+    public static final int MANAGER = 1;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_roles")
     @SequenceGenerator(name="seq_roles", sequenceName="seq_roles", allocationSize=1)

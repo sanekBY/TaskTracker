@@ -120,7 +120,7 @@ service.factory('ProjectsFactory', function ($resource) {
 service.factory('ProjectFactory', function ($resource) {
     return $resource('/api/project/:id', {}, {
         show: { method: 'GET'},
-        create: { method: 'POST' }
+        update: { method: 'POST', params: {id:'@id'} }
     })
 });
 
@@ -128,5 +128,12 @@ service.factory('TasksFactory', function ($resource) {
     return $resource('/api/project/:id/tasks', {}, {
         show: { method: 'GET'},
         create: { method: 'POST', params: {id:'@id'} }
+    })
+});
+
+service.factory('UsersFactory', function ($resource) {
+    return $resource('/api/users', {}, {
+        show: { method: 'GET', isArray: true},
+        update: { method: 'POST' }
     })
 });

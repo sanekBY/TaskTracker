@@ -72,9 +72,29 @@ app.controller('ProjectsController', ['$scope',  '$route', 'ProjectsFactory',
         $scope.projects = ProjectsFactory.query();
 }]);
 
-app.controller('ProjectInfoController', ['$scope',  '$routeParams', 'ProjectFactory',
-    function ( $scope, $routeParams, ProjectFactory ) {
+app.controller('ProjectInfoController', ['$scope',  '$routeParams', 'ProjectFactory', 'UsersFactory',
+    function ( $scope, $routeParams, ProjectFactory, UsersFactory) {
+
+        $scope.users = UsersFactory.show();
         $scope.project = ProjectFactory.show({id: $routeParams.id});
+
+        $scope.showOptions = false;
+        $scope.toggle = function(){
+            $scope.showOptions = !$scope.showOptions;
+        };
+
+        $scope.selected = [];
+        var selectedUsers = [];
+        $scope.save = function(){
+            for (var i = 0; i < $scope.selected.length; i++) {
+                if (isSelected($scope.selected[i])) {
+                    selectedUsers.push($scope.users[i]);
+                }
+            }
+            ProjectFactory.update({id: $routeParams.id}, selectedUsers);
+            console.log(selectedUsers);
+        };
+        function isSelected(element) {return element;}
 }]);
 
 app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', 'TasksFactory',
@@ -84,4 +104,9 @@ app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', '
             TasksFactory.create({id: $routeParams.id}, task);
             $location.path('/developer/project/' +  $routeParams.id);
         }
+}]);
+
+app.controller('TaskInfoController', ['$scope',  '$routeParams', 'TaskFactory',
+    function ( $scope, $routeParams, TaskFactory ) {
+        $scope.task = TaskFactory.show({id: $routeParams.id});
 }]);

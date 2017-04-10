@@ -1,11 +1,13 @@
 package com.sashqua.tracker.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

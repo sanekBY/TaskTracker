@@ -23,13 +23,13 @@ import java.util.List;
 public class TrackerController {
 
     @Autowired
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    ProjectService projectService;
+    private  ProjectService projectService;
     @Autowired
-    TaskService taskService;
+    private TaskService taskService;
 
     @RequestMapping("/api/user/info")
     public com.sashqua.tracker.entitys.User user() {
@@ -53,6 +53,12 @@ public class TrackerController {
         return projectService.getProject(id);
     }
 
+    @RequestMapping(value = "/api/project/{id}", method = {RequestMethod.POST})
+    public Project setUsersInProj(@PathVariable("id") Integer id, @RequestBody @Valid final List<com.sashqua.tracker.entitys.User> users) {
+        return projectService.addUsers(id, users);
+    }
+
+
     @RequestMapping(value = "/api/project/{id}/tasks", method = {RequestMethod.POST})
     public Task createTask(@PathVariable("id") Integer id, @RequestBody @Valid final Task task) {
         Project project = new Project();
@@ -66,26 +72,15 @@ public class TrackerController {
         return taskService.getTask(id);
     }
 
+    @RequestMapping(value = "/api/users", method = {RequestMethod.GET})
+    public List<com.sashqua.tracker.entitys.User> getUsers() {
+        return userService.getAllDevelopers();
+    }
+
 
 //    @RequestMapping(value = "/api/project/{id}/task/{id}", method = {RequestMethod.GET})
 //    public Project getVoter(@PathVariable("id") Integer id) {
 //        return projectService.getProject(id);
 //    }
 
-
-    @RequestMapping(value = "/auth/login", method = RequestMethod.GET, produces = "application/json")
-    public User getUser(Principal principial) {
-        if (principial != null) {
-            if (principial instanceof AbstractAuthenticationToken){
-                return (User) ((AbstractAuthenticationToken) principial).getPrincipal();
-            }
-        }
-        return null;
-    }
-
-    @RequestMapping(value = "/auth/logout", method = RequestMethod.POST)
-    public void logout(HttpServletRequest rq, HttpServletResponse rs) {
-        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-        securityContextLogoutHandler.logout(rq, rs, null);
-    }
 }

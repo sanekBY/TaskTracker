@@ -2,6 +2,7 @@ package com.sashqua.tracker.service.impl;
 
 import com.sashqua.tracker.entitys.Project;
 import com.sashqua.tracker.entitys.Role;
+import com.sashqua.tracker.entitys.User;
 import com.sashqua.tracker.repository.ProjectRepository;
 import com.sashqua.tracker.repository.RoleRepository;
 import com.sashqua.tracker.service.ProjectService;
@@ -37,4 +38,14 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getUserProjects(Integer userId) {
         return projectRepository.findUserProjects(userId);
     }
+
+    @Override
+    public Project addUsers(Integer projectId, List<User> users) {
+        Project proj = projectRepository.findOne(projectId);
+        List<User> userList = proj.getUsers();
+        userList.addAll(users);
+        proj.setUsers(userList);
+        return projectRepository.save(proj);
+    }
+
 }

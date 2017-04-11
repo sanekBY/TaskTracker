@@ -140,6 +140,11 @@ service.factory('UsersFactory', function ($resource) {
     })
 });
 
+service.factory('UserFactory', function ($resource) {
+    return $resource('/auth/user', {}, {
+        create: { method: 'POST'}
+    })
+});
 
 service.factory('CommentFactory', function ($resource) {
     return $resource('/api/task/:id/comment', {}, {

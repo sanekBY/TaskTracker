@@ -40,6 +40,22 @@ app.controller('LoginController', ['$rootScope', '$scope',  '$location', 'UserSe
     };
 }]);
 
+app.controller('RegisterController', ['$scope', '$routeParams', '$location', 'UserFactory',
+    function ($scope, $routeParams, $location, UserFactory) {
+        $scope.asManager = false;
+        $scope.register = function () {
+            if ($scope.password != null && $scope.password === $scope.passwordConfirm) {
+                var role = {};
+                $scope.asManager ?  role = {"id":1,"name":"Manager"} : role = {"id":2,"name":"Developer"};
+                console.log("WORKING");
+                var user = {"id": 1, "firstName" : $scope.firstName, "lastName" : $scope.lastName, "email" : $scope.email,
+                    "password" : $scope.password, "role" : role, "projectList" : null};
+                UserFactory.create(user);
+                $location.path('/');
+            }
+        }
+    }]);
+
 app.controller('MainController', ['$rootScope', '$scope',  '$location', 'UserService', function ( $rootScope, $scope, $location, UserService ) {
     $rootScope.authenticated = false;
 

@@ -19,7 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().and()
                 .authorizeRequests()
-                .antMatchers("/index.html","/login.html", "/", "/main.html", "/auth/**").permitAll()
+                .antMatchers("/", "/index.html","/login.html", "/register.html", "/main.html", "/auth/**").permitAll()
                 .antMatchers("/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_DEVELOPER')")
                 .anyRequest().authenticated()
                 .and()

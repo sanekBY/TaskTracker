@@ -45,6 +45,11 @@ public class TrackerController {
         return user;
     }
 
+    @RequestMapping(value = "/auth/user",  method = RequestMethod.POST)
+    public com.sashqua.tracker.entitys.User createUser(@RequestBody @Valid final com.sashqua.tracker.entitys.User user) {
+        return userService.save(user);
+    }
+
     @RequestMapping(value = "/api/projects", method = RequestMethod.POST)
     public Project createProject (@RequestBody @Valid final Project project) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

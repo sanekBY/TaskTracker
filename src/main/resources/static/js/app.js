@@ -12,6 +12,10 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'login.html',
                 controller: 'LoginController'
             })
+            .when('/register', {
+                templateUrl: 'register.html',
+                controller: 'RegisterController'
+            })
             .when('/developer/projects', {
                 templateUrl: 'developer/projects.html',
                 controller: 'ProjectsController'
@@ -32,9 +36,6 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'developer/task-info.html',
                 controller: 'TaskInfoController'
             })
-
-            // .when('/voter/:id', {templateUrl: 'voter.html', controller: 'VoterDetailCtrl'})
-            // .when('/create-vote', {templateUrl: 'create-vote.html', controller: 'VoterCreationCtrl'})
             .otherwise({
                 redirectTo: '/error/404'
             });

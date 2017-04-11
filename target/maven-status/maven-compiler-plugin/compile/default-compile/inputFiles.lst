@@ -1,0 +1,12 @@
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/Comment.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/Project.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/service/UserService.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/Task.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/controllers/TrackerController.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/repository/UserRepository.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/service/impl/UserServiceImpl.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/Application.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/Role.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/User.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/config/SecurityConfiguration.java
+/home/sashqua/workspace/TaskTracker/src/main/java/com/sashqua/tracker/entitys/TaskStatus.java

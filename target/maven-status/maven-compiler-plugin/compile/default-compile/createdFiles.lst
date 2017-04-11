@@ -1,0 +1,12 @@
+com/sashqua/tracker/entitys/Project.class
+com/sashqua/tracker/entitys/Comment.class
+com/sashqua/tracker/service/UserService.class
+com/sashqua/tracker/entitys/TaskStatus.class
+com/sashqua/tracker/repository/UserRepository.class
+com/sashqua/tracker/controllers/TrackerController.class
+com/sashqua/tracker/config/SecurityConfiguration.class
+com/sashqua/tracker/Application.class
+com/sashqua/tracker/entitys/User.class
+com/sashqua/tracker/entitys/Task.class
+com/sashqua/tracker/entitys/Role.class
+com/sashqua/tracker/service/impl/UserServiceImpl.class

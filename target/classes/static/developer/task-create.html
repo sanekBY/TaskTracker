@@ -1,0 +1,30 @@
+<div class="panel panel-default" xmlns:h="http://www.w3.org/1999/html">
+    <div class="header-panel text-center">
+        <h1>Create task</h1>
+    </div>
+
+    <form class="form-horizontal">
+        <div class="col-sm-4">
+            <div class=form-group"">
+                <label for="name">Name:</label>
+                <input class="form-control" id="name" type="text" data-ng-model="name"/>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" rows="3" id="description" data-ng-model="description" > </textarea>
+            </div>
+            <label>
+                Status:
+                <select data-ng-model="tstatus">
+                    <option data-ng-repeat="stat in statuses" value="{{stat.id}}">{{stat.name}}</option>
+                </select>
+            </label>
+            <div class="control-group">
+                <div class="form-select-button text-right">
+                    <a data-ng-click="createNewTask()" class="btn btn-success">Create</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

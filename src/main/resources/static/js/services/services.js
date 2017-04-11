@@ -56,12 +56,7 @@ service.service(
             };
 
             this.logout = function(callback) {
-                console.log("asdasdsd");
                 removeRememberMeCookie();
-                // return  $http({
-                //     method: 'POST',
-                //     url: 'auth/logout'
-                // });
                 $http({
                     method: 'POST',
                     url: 'auth/logout'
@@ -131,9 +126,25 @@ service.factory('TasksFactory', function ($resource) {
     })
 });
 
+service.factory('TaskFactory', function ($resource) {
+    return $resource('/api/task/:id', {}, {
+        show: { method: 'GET'},
+        update: { method: 'POST', params: {id:'@id'}}
+    })
+});
+
 service.factory('UsersFactory', function ($resource) {
     return $resource('/api/users', {}, {
         show: { method: 'GET', isArray: true},
-        update: { method: 'POST' }
+        update: { method: 'POST', isArray: true }
     })
 });
+
+
+service.factory('CommentFactory', function ($resource) {
+    return $resource('/api/task/:id/comment', {}, {
+        show: { method: 'GET'},
+        add: { method: 'POST', params: {id:'@id'}}
+    })
+});
+

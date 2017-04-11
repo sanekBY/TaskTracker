@@ -1,9 +1,12 @@
 package com.sashqua.tracker.entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
@@ -17,20 +20,23 @@ public class Task {
     private String name;
     @Column(name = "description")
     private String description;
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
     @JoinTable(name = "user_task", joinColumns = {
             @JoinColumn(name = "task_id", referencedColumnName = "id")}, inverseJoinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> userList;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task", cascade = CascadeType.ALL)
+    private Set<User> userList;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+//    @JsonIgnoreProperties({"task"})
     private List<Comment> commentList;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_status_id")
     private TaskStatus taskStatus;
+
+    public Task() {
+    }
 
     public Integer getId() {
         return id;
@@ -41,11 +47,11 @@ public class Task {
     }
 
 
-    public List<User> getUserList() {
+    public Set<User> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<User> userList) {
+    public void setUserList(Set<User> userList) {
         this.userList = userList;
     }
 

@@ -1,6 +1,6 @@
 package com.sashqua.tracker.entitys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,16 +29,19 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "role_id")
+    @JsonIgnoreProperties({"userList"})
     private Role role;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
-//    private List<Task> taskList;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
+
+    @JsonIgnoreProperties({"users"})
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Project> projectList;
-    @Transient
-    private String username;
+
+//    @JsonIgnoreProperties({"users"})
+//    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+//    private List<Comment> commentstList;
+
 
     public User() {
     }
@@ -139,7 +142,11 @@ public class User implements UserDetails {
         this.projectList = projectList;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+//    public List<Comment> getCommentstList() {
+//        return commentstList;
+//    }
+//
+//    public void setCommentstList(List<Comment> commentstList) {
+//        this.commentstList = commentstList;
+//    }
 }

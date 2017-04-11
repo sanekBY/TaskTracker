@@ -1,9 +1,11 @@
 package com.sashqua.tracker.entitys;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "projects")
 public class Project {
@@ -16,17 +18,20 @@ public class Project {
     private String name;
     @Column(name = "description")
     private String description;
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private User owner;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"project", "owner"})
     private List<Task> taskList;
+
     @JoinTable(name = "user_project", joinColumns = {
             @JoinColumn(name = "project_id", referencedColumnName = "id")}, inverseJoinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> users;
+    @ManyToMany
+    private Set<User> users;
 
     public Project(){
     }
@@ -71,11 +76,11 @@ public class Project {
         this.owner = owner;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 }

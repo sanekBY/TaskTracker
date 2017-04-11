@@ -14,7 +14,6 @@ app.run(function ($rootScope, $templateCache) {
     });
 });
 
-
 app.controller('LoginController', ['$rootScope', '$scope',  '$location', 'UserService', function ( $rootScope, $scope, $location, UserService) {
     $scope.login = function() {
         UserService
@@ -26,6 +25,11 @@ app.controller('LoginController', ['$rootScope', '$scope',  '$location', 'UserSe
                     if (success) {
                         $location.path('/');
                         $rootScope.authenticated = true;
+                        $rootScope.manager = false;
+
+                        UserService.getUserInfo(function(userInfo) {
+                            if (userInfo.data.authorities[0].authority === "ROLE_MANAGER")  $rootScope.manager = true;
+                        });
                         console.log("SUCCESS")
                     } else {
                         $rootScope.authenticated = false;
@@ -36,7 +40,7 @@ app.controller('LoginController', ['$rootScope', '$scope',  '$location', 'UserSe
     };
 }]);
 
-app.controller('MainController', ['$rootScope', '$scope',  '$route', 'UserService', function ( $rootScope, $scope, $route, UserService ) {
+app.controller('MainController', ['$rootScope', '$scope',  '$location', 'UserService', function ( $rootScope, $scope, $location, UserService ) {
     $rootScope.authenticated = false;
 
     UserService.getUserInfo(function(userInfo) {
@@ -49,7 +53,7 @@ app.controller('MainController', ['$rootScope', '$scope',  '$route', 'UserServic
         UserService.logout(function(success) {
             if (success) {
                 console.log("LOGOUT SUCCESS");
-                $route.reload();
+                $location.path('/');
             } else {
                console.log("LOGOUT ERROR");
             }
@@ -57,12 +61,12 @@ app.controller('MainController', ['$rootScope', '$scope',  '$route', 'UserServic
     };
 }]);
 
-app.controller('ProjectCreateController', ['$rootScope', '$scope',  '$location', 'ProjectFactory',
-    function ( $rootScope, $scope, $location, ProjectFactory ) {
+app.controller('ProjectCreateController', ['$rootScope', '$scope',  '$location', 'ProjectsFactory',
+    function ( $rootScope, $scope, $location, ProjectsFactory ) {
 
     $scope.createNewProject = function () {
         var project = {"id": 1, "name" : $scope.name, "description" : $scope.description, "user_id" : null};
-        ProjectFactory.create(project);
+        ProjectsFactory.create(project);
         $location.path('/developer/projects');
     }
 }]);
@@ -92,7 +96,6 @@ app.controller('ProjectInfoController', ['$scope',  '$routeParams', 'ProjectFact
                 }
             }
             ProjectFactory.update({id: $routeParams.id}, selectedUsers);
-            console.log(selectedUsers);
         };
         function isSelected(element) {return element;}
 }]);
@@ -106,7 +109,34 @@ app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', '
         }
 }]);
 
-app.controller('TaskInfoController', ['$scope',  '$routeParams', 'TaskFactory',
-    function ( $scope, $routeParams, TaskFactory ) {
+app.controller('TaskInfoController', ['$scope',  '$routeParams', 'TaskFactory', 'UsersFactory', 'CommentFactory',
+    function ( $scope, $routeParams, TaskFactory, UsersFactory, CommentFactory ) {
+        $scope.users = UsersFactory.show();
         $scope.task = TaskFactory.show({id: $routeParams.id});
+
+        $scope.showOptions = false;
+        $scope.toggle = function(){
+            $scope.showOptions = !$scope.showOptions;
+        };
+
+        $scope.selected = [];
+        var selectedUsers = [];
+        $scope.save = function(){
+            for (var i = 0; i < $scope.selected.length; i++) {
+                if (isSelected($scope.selected[i])) {
+                    selectedUsers.push($scope.users[i]);
+                }
+            }
+            TaskFactory.update({id: $routeParams.id}, selectedUsers);
+        };
+        function isSelected(element) {return element;}
+        $scope.comment = "";
+        $scope.addComment = function () {
+            console.log("asdasd");
+            $scope.task.commentList.push({"id" : 1, "text" : $scope.comment, "owner" : null, "task" : null});
+            CommentFactory.add({id: $routeParams.id}, {"id" : null, "text" : $scope.comment, "owner" : null, "task" : null});
+            $scope.comment = "";
+            console.log($scope.task.commentList);
+        };
+
 }]);

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service("projectService")
 @Validated
@@ -40,12 +41,33 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project addUsers(Integer projectId, List<User> users) {
+    public List<Project> getDeveloperProjects(Integer userId) {
+        List<Project> projects = new ArrayList<>();
+        List<Project> usersProjecs = new ArrayList<>();
+        projects = projectRepository.findAll();
+        for (Project proj : projects) {
+            for (User user : proj.getUsers()) {
+                if (user.getId() == userId) usersProjecs.add(proj);
+                continue;
+            }
+        }
+        return usersProjecs;
+    }
+
+    @Override
+    public List<Project> getDeveloperProjects(User user) {
+        return projectRepository.findDeveloperProjects(user);
+    }
+
+    @Override
+    public Project addUsers(Integer projectId, Set<User> users) {
         Project proj = projectRepository.findOne(projectId);
-        List<User> userList = proj.getUsers();
+        Set<User> userList = proj.getUsers();
         userList.addAll(users);
-        proj.setUsers(userList);
-        return projectRepository.save(proj);
+        if (userList.size() != users.size()) {
+            proj.setUsers(userList);
+            return projectRepository.save(proj);
+        } else return null;
     }
 
 }

@@ -1,14 +1,15 @@
 <div class="panel panel-default" xmlns:h="http://www.w3.org/1999/html">
     <h1>{{project.name}}</h1>
 
-
-        <div data-ng-click="toggle()">Add developers to project</div>
-        <div data-ng-show="showOptions">
-            <label data-ng-repeat="user in users">{{user.firstName}} {{user.lastName}}
-                <input type="checkbox" data-ng-model="selected[$index]"/><br/>
-            </label>
+    <div data-ng-show="manager">
+        <button type="button" class="btn btn-primary" data-ng-click="toggle()">Add developers to project</button>
+        <div class="selectpicker" data-ng-show="showOptions">
+            <div data-ng-repeat="user in users">
+                <label> {{user.firstName}} {{user.lastName}} <input type="checkbox" data-ng-model="selected[$index]"/> </label>
+            </div>
             <a class="btn btn-small btn-success" data-ng-click="save()">Save</a>
         </div>
+    </div>
 
     <table class="table table-hover">
         <thead>

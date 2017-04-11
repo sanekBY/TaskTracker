@@ -71,3 +71,8 @@ INSERT INTO roles (id, name) VALUES (2, 'Developer');
 INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (1, 'Alex', 'Shal', 'alex@mail.ru', '7612635', 1);
 INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (2, 'Alex', 'Shal', 'developer', 'developer', 2);
 INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (3, 'Alex', 'Shal', 'admin', 'admin', 1);
+
+INSERT INTO task_status (id, name) VALUES (1, 'waiting');
+INSERT INTO task_status (id, name) VALUES (2, 'implementation');
+INSERT INTO task_status (id, name) VALUES (3, 'verifying');
+INSERT INTO task_status (id, name) VALUES (4, 'releasing');

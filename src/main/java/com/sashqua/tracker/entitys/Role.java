@@ -1,7 +1,7 @@
 package com.sashqua.tracker.entitys;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +13,6 @@ public class Role {
     public static final int DEVELOPER = 2;
     public static final int MANAGER = 1;
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_roles")
     @SequenceGenerator(name="seq_roles", sequenceName="seq_roles", allocationSize=1)
@@ -21,8 +20,12 @@ public class Role {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     private List<User> userList;
+
+    public Role() {
+    }
 
     public Integer getId() {
         return id;
@@ -31,7 +34,6 @@ public class Role {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public List<User> getUserList() {
         return userList;

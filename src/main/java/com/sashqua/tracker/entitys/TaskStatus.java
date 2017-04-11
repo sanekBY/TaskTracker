@@ -17,6 +17,9 @@ public class TaskStatus {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskStatus", cascade = CascadeType.ALL)
     private List<Task> taskList;
 
+    public TaskStatus() {
+    }
+
 
     public Integer getId() {
         return id;

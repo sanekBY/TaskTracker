@@ -117,10 +117,13 @@ app.controller('ProjectInfoController', ['$scope',  '$routeParams', 'ProjectFact
         function isSelected(element) {return element;}
 }]);
 
-app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', 'TasksFactory',
-    function ($scope, $routeParams, $location, TasksFactory) {
+app.controller('TaskCreateController', ['$scope', '$routeParams', '$location', 'TasksFactory', 'StatusFactory',
+    function ($scope, $routeParams, $location, TasksFactory, StatusFactory) {
+
+        $scope.statuses = StatusFactory.show();
+
         $scope.createNewTask = function () {
-            var task = {"id": 1, "name" : $scope.name, "description" : $scope.description, "user_id" : null, "project_id" : null, "task_status_id" : 1};
+            var task = {"id": 1, "name" : $scope.name, "description" : $scope.description, "project" : null, "userList":null,"commentList":null, "taskStatus": $scope.statuses[$scope.tstatus-1]};
             TasksFactory.create({id: $routeParams.id}, task);
             $location.path('/developer/project/' +  $routeParams.id);
         }

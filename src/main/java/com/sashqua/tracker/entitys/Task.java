@@ -31,8 +31,9 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
 //    @JsonIgnoreProperties({"task"})
     private List<Comment> commentList;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "task_status_id")
+    @JsonIgnoreProperties({"taskList"})
     private TaskStatus taskStatus;
 
     public Task() {

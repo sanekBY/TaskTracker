@@ -1,13 +1,7 @@
 package com.sashqua.tracker.controllers;
 
-import com.sashqua.tracker.entitys.Comment;
-import com.sashqua.tracker.entitys.Project;
-import com.sashqua.tracker.entitys.Role;
-import com.sashqua.tracker.entitys.Task;
-import com.sashqua.tracker.service.CommentService;
-import com.sashqua.tracker.service.ProjectService;
-import com.sashqua.tracker.service.TaskService;
-import com.sashqua.tracker.service.UserService;
+import com.sashqua.tracker.entitys.*;
+import com.sashqua.tracker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,6 +32,8 @@ public class TrackerController {
     private TaskService taskService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private TaskStatusService taskStatusService;
 
     @RequestMapping("/api/user/info")
     public com.sashqua.tracker.entitys.User user() {
@@ -122,11 +118,10 @@ public class TrackerController {
         return commentService.getComment(id);
     }
 
-//    @RequestMapping(value = "/api/statuses", method = {RequestMethod.GET})
-//    public List<com.sashqua.tracker.entitys.User> getUsers() {
-//
-//        return userService.getAllDevelopers();
-//    }
+    @RequestMapping(value = "/api/statuses", method = {RequestMethod.GET})
+    public List<TaskStatus> getStatuses() {
+        return taskStatusService.getAll();
+    }
 
 
 }

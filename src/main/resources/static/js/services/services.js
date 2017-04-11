@@ -153,3 +153,8 @@ service.factory('CommentFactory', function ($resource) {
     })
 });
 
+service.factory('StatusFactory', function ($resource) {
+    return $resource('/api/statuses', {}, {
+        show: { method: 'GET', isArray: true}
+    })
+});

@@ -1,5 +1,8 @@
 package com.sashqua.tracker.entitys;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,7 +17,9 @@ public class TaskStatus {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taskStatus", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "taskStatus", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @JsonIgnoreProperties({"taskStatus"})
     private List<Task> taskList;
 
     public TaskStatus() {

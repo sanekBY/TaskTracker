@@ -2,10 +2,10 @@
 
     <div class="header-panel text-center">
         <h1>Project: {{project.name}}</h1>
-        <h2>Description: {{project.description}}</h2>
+        <h2>{{project.description}}</h2>
     </div>
 
-    <div data-ng-show="manager">
+    <div data-ng-show="manager" class="text-center">
         <button type="button" class="btn btn-default dropdown-toggle" data-ng-click="toggle()">Add developers to project</button>
         <div class="selectpicker" data-ng-show="showOptions">
             <div data-ng-repeat="user in users">
@@ -20,13 +20,14 @@
         <tr>
             <th>Task Name</th>
             <th>Task Description</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
             <tr data-ng-repeat="item in project.taskList" >
                 <td class="col-sm-3" ><a href="developer/project/{{project.id}}/task/{{item.id}}">{{item.name}}</a></td>
-                <td class="col-sm-8">{{item.description}}</td>
-                <!--<td class="col-sm-8">{{item.status}}</td>-->
+                <td class="col-sm-3">{{item.description}}</td>
+                <td class="col-sm-3">{{item.taskStatus.name}}</td>
             </tr>
         </tbody>
     </table>

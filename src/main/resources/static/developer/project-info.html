@@ -1,8 +1,12 @@
 <div class="panel panel-default" xmlns:h="http://www.w3.org/1999/html">
-    <h1>{{project.name}}</h1>
+
+    <div class="header-panel text-center">
+        <h1>Project: {{project.name}}</h1>
+        <h2>Description: {{project.description}}</h2>
+    </div>
 
     <div data-ng-show="manager">
-        <button type="button" class="btn btn-primary" data-ng-click="toggle()">Add developers to project</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-ng-click="toggle()">Add developers to project</button>
         <div class="selectpicker" data-ng-show="showOptions">
             <div data-ng-repeat="user in users">
                 <label> {{user.firstName}} {{user.lastName}} <input type="checkbox" data-ng-model="selected[$index]"/> </label>

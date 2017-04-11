@@ -20,13 +20,14 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right" >
                     <li data-ng-show="!authenticated"><a  href="login">login</a></li>
-                    <li ><a  href="register">register</a></li>
+                    <li ><a  href="register" data-ng-show="!authenticated">register</a></li>
                     <li data-ng-show="authenticated"><a href="#" data-ng-click="logout()">logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <div data-ng-view> </div>
+
     <script src="js/angular-1.6.3/angular.js"></script>
     <script src="js/angular-1.6.3/angular-resource.js"></script>
     <script src="js/angular-1.6.3/angular-route.js"></script>

@@ -23,8 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").access("hasRole('ROLE_MANAGER') or hasRole('ROLE_DEVELOPER')")
                 .anyRequest().authenticated()
                 .and()
-//                .formLogin().loginPage("/login.html")
-//                .and()
+                .formLogin().loginPage("/login.html")
+                .and()
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }

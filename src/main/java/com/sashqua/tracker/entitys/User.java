@@ -42,7 +42,6 @@ public class User implements UserDetails {
 //    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 //    private List<Comment> commentstList;
 
-
     public User() {
     }
 

@@ -56,7 +56,7 @@ app.controller('RegisterController', ['$scope', '$routeParams', '$location', 'Us
         }
     }]);
 
-app.controller('MainController', ['$rootScope', '$scope',  '$location', 'UserService', function ( $rootScope, $scope, $location, UserService ) {
+app.controller('MainController', ['$rootScope', '$scope', '$route', '$location', 'UserService', function ( $rootScope, $scope, $route, $location, UserService ) {
     $rootScope.authenticated = false;
 
     UserService.getUserInfo(function(userInfo) {
@@ -70,6 +70,7 @@ app.controller('MainController', ['$rootScope', '$scope',  '$location', 'UserSer
             if (success) {
                 console.log("LOGOUT SUCCESS");
                 $location.path('/');
+                $route.reload();
             } else {
                console.log("LOGOUT ERROR");
             }

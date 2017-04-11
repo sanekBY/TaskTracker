@@ -57,14 +57,9 @@ app.controller('RegisterController', ['$scope', '$routeParams', '$location', 'Us
     }]);
 
 app.controller('MainController', ['$rootScope', '$scope', '$route', '$location', 'UserService', function ( $rootScope, $scope, $route, $location, UserService ) {
-    $rootScope.authenticated = false;
-
     UserService.getUserInfo(function(userInfo) {
         $rootScope.authenticated = userInfo ? true : false;
     });
-
-    $rootScope.authenticated = true;
-
     $rootScope.logout = function() {
         UserService.logout(function(success) {
             if (success) {
@@ -156,7 +151,6 @@ app.controller('TaskInfoController', ['$scope',  '$routeParams', 'TaskFactory', 
             $scope.task.commentList.push({"id" : 1, "text" : $scope.comment, "owner" : null, "task" : null});
             CommentFactory.add({id: $routeParams.id}, {"id" : null, "text" : $scope.comment, "owner" : null, "task" : null});
             $scope.comment = "";
-            console.log($scope.task.commentList);
         };
 
 }]);
